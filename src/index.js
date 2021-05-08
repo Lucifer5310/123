@@ -23,12 +23,13 @@ const createWindow = () => {
     width: 1440,
     height: 900,
     // icon: __dirname + "img/icon.png",
-    
     //решение проблемы ReferenceError: require не определен
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      contextIsolation: false
     }
   });
+  //mainWindow.webContents.openDevTools();
 
   logger.info("App is opened.");
 
@@ -69,6 +70,3 @@ app.on('activate', () => {
     createWindow();
   }
 });
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.

@@ -1,32 +1,50 @@
-const MongoClient = require("mongodb").MongoClient;
+let fs = require("fs");
+let correct = document.getElementById("correct");
+correct.innerText = "";
 
-const url = "mongodb://localhost:27017/";
-const mongoClient = new MongoClient(url, { useUnifiedTopology: true });
+function register(){
+    let loginValue = document.forms["auth"].elements["login"].value;
+    let passValue = document.forms["auth"].elements["password"].value;
+    if (loginValue == "" || loginValue == NaN || loginValue == " " ||
+        passValue == "" || passValue == NaN || passValue == " ") {
+        document.getElementById("correct").innerText = "Упс, наверное руки трясутся. Вы не всё ввели!";
+    } 
+    else {
+        fs.appendFileSync("src/bd.txt", "\n" + loginValue + " " + passValue);
+        document.location.href = "index.html";    
+    }
+    
+}
+
+function checkBD(){
+    let BD = fs.readFileSync("src/bd.txt", "utf8");
+
+    BD = BD.split("\n");
+    BD.splice(0, 1)
+    for(let i=0; i < BD.length; i++){
+        BD[i] = BD[i].split(" ");
+    }
+    console.log(BD);
+    return BD;
+}
 
 function auth(){
-    //alert("Функция чето фурычит")
-    document.location.href = "main.html";
-    mongoClient.connect(function(err, client){
-      
-        const db = client.db("Company");
-        const collection = db.collection("Alkashka");
-              
-            if(err){ 
-                document.getElementById("correct").style.display = "block";
-                return alert(err);
-            }
-    
-            let loginValue = document.forms["auth"].elements["login"].value;
-            let passValue = document.forms["auth"].elements["password"].value;
-            let usuerValue = collection.find( { login: loginValue } );
+    let BD = checkBD();
+    let loginValue = document.forms["auth"].elements["login"].value;
+    let passValue = document.forms["auth"].elements["password"].value;
+    console.log(BD);
+    for(let i = 0; i < BD.length; i++){
+        if (BD[i][0] == loginValue){
+            console.log(BD[i][0]);
+            if(BD[i][1] == passValue){
+                console.log(BD[i][1]);
 
-            if (passValue == usuerValue.password) {
                 document.location.href = "main.html";
-            }   
-            else {
-                document.getElementById("correct").style.display = "block";
             }
-
-            client.close();
-    });
+            else {
+                correct.innerText = "Упс, пароль неправильный:)";
+            }
+        }
+    }
+    correct.innerText = "Что-то вы снова придумываете. Такого аккаунта нету:)";
 }

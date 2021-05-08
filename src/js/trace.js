@@ -30,9 +30,8 @@ function tracert(){
 
     console.innerText = ">traceroute -m " + hope + " " + address + "\n\n Выполняется запрос...";
     const { exec } = require("child_process");
-    exec("chcp 65001 & traceroute -I -m " + hope + " " + address, (error, stdout, stderr) => {
+    exec("traceroute -I -m " + hope + " " + address + " || (gnome-terminal --command=\"sudo apt install ./src/traceroute_2.1.0-2_amd64.deb\" & echo для установки пакета traceroute введите пароль!)", (error, stdout, stderr) => {
         if(error){
-            exec("chcp 65001 & ./trace.bin " +  address)
             console.innerText = error.message;
             logger.error(error.message);
         }
