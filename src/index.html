@@ -14,19 +14,46 @@
         <div class="preloader__item"></div>
       </div>
     </div>
-
-    <div class="auth-form">
-      <form action="#" id="auth">
-        <input type="text" class="input input-auth" placeholder="Логин" name="login" id="login">
-        <input type="password" class="input input-auth" placeholder="Пароль" name="password" id="password">
-        <a type="button" name="button" class="button auth-btn" onclick="auth()">Войти</a>
-        <a href="register.html">Нет аккаунта? Зарегиструруйтесь!</a>
-        <label id="correct" for=""></label>
-      </form>
+    <div class="menu-closed">
+      <a href="#" class="main-menu menu-link" id="menu-toggle">
+        <svg width="30" height="30" class="icon" id="menu-icon">
+          <use xlink:href="img/icons.svg#menu"></use>
+        </svg>
+      </a>
+      <div class="menu-links">
+        <a href="main.html" class="menu-link">
+          <svg width="30" height="30" class="icon icon-active">
+            <use xlink:href="img/icons.svg#main"></use>
+          </svg>
+        </a>
+        <a href="ping.html" class="menu-link">
+          <svg width="30" height="30" class="icon">
+            <use xlink:href="img/icons.svg#ping"></use>
+          </svg>
+        </a>
+        <a href="trace.html" class="menu-link">
+          <svg width="30" height="30" class="icon">
+            <use xlink:href="img/icons.svg#tracert"></use>
+          </svg>
+        </a>
+      </div>
     </div>
-    
-
-    <script src="js/auth.js"></script>
+    <div class="sidebar">
+      <div class="sidebar-links">
+        <a href="index.html" class="sidebar-link active">Main</a>
+        <a href="ping.html" class="sidebar-link">Ping</a>
+        <a href="trace.html" class="sidebar-link">Tracert (-h)</a>
+      </div>
+    </div>
+    <div class="content">
+      <div class="console-area">
+        <p class="console" id="console">
+          Загрузка информации о системе...
+        </p>
+      </div>
+    </div>
+    <script src="js/main.js"></script>
     <script src="js/preloader.js"></script>
+    <script src="js/menu.js"></script>
   </body>
 </html>
